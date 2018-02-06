@@ -179,5 +179,10 @@ fabric.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
 
 # End of https://www.gitignore.io/api/kotlin,android,androidstudio
