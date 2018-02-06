@@ -1,13 +1,12 @@
 package com.example.dennis.hackaton
 
-import android.content.Intent
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.google.android.gms.location.*
@@ -18,19 +17,22 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
+import android.location.LocationManager
+import android.widget.Toast
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private var mLocationRequest: LocationRequest? = null
     private val UPDATE_INTERVAL = (5 * 1000).toLong()  /* 10 secs */
     private val FASTEST_INTERVAL: Long = 2000 /* 2 sec */
 
-    private var mLocationRequest: LocationRequest? = null
     private var latitude = 0.0
     private var longitude = 0.0
 
     private lateinit var mGoogleMap: GoogleMap
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (mGoogleMap != null) {
             mGoogleMap!!.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title("Current Location"))
         }
+
     }
 
 
@@ -117,6 +120,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 registerLocationListner()
             }
         }
-}
-
-}
+}}
