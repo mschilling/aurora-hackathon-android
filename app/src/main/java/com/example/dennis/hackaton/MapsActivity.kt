@@ -1,6 +1,5 @@
 package com.example.dennis.hackaton
 
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -17,22 +16,18 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import android.location.LocationManager
-import android.widget.Toast
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var mLocationRequest: LocationRequest? = null
     private val UPDATE_INTERVAL = (5 * 1000).toLong()  /* 10 secs */
     private val FASTEST_INTERVAL: Long = 2000 /* 2 sec */
 
+    private var mLocationRequest: LocationRequest? = null
     private var latitude = 0.0
     private var longitude = 0.0
 
     private lateinit var mGoogleMap: GoogleMap
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +35,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
     }
 
     override fun onStart() {
@@ -58,7 +52,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-
     protected fun startLocationUpdates() {
         mLocationRequest = LocationRequest.create()
         mLocationRequest!!.run {
@@ -69,6 +62,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val builder = LocationSettingsRequest.Builder()
         builder.addLocationRequest(mLocationRequest!!)
+
         val locationSettingsRequest = builder.build()
 
         val settingsClient = LocationServices.getSettingsClient(this)
@@ -90,14 +84,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun onLocationChanged(location: Location) {
         var msg = "Updated Location: " + location.latitude  + " , " +location.longitude
+        val location = LatLng(location.latitude, location.longitude)
 
         // show toast message with updated location
         //Toast.makeText(this,msg, Toast.LENGTH_LONG).show()
 
-        val location = LatLng(location.latitude, location.longitude)
         mGoogleMap!!.clear()
         mGoogleMap!!.addMarker(MarkerOptions().position(location).title("Current Location"))
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
     }
 
     private fun checkPermission() : Boolean {
