@@ -17,7 +17,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val UPDATE_INTERVAL = (5 * 1000).toLong()  /* 10 secs */
@@ -49,7 +48,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (mGoogleMap != null) {
             mGoogleMap!!.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title("Current Location"))
         }
-
     }
 
     protected fun startLocationUpdates() {

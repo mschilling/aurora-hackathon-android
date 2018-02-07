@@ -7,19 +7,24 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.firestore.FirebaseFirestore
+
 
 class MainActivity : AppCompatActivity() {
-
+    private var mFireStore: FirebaseFirestore? = null
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Greet.text = "Test Kotlin"
-
         checkGps()
+        connectToFireStore()
+
 
         mapsButton.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
@@ -50,5 +55,21 @@ class MainActivity : AppCompatActivity() {
         else {
             Toast.makeText(this, "Your gps is already enabled", Toast.LENGTH_LONG).show()
         }
+    }
+    private fun connectToFireStore() {
+
+        mFireStore = FirebaseFirestore.getInstance()
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        mFireStore!!.collection("pointsOfInterest")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result) {
+                            Log.d("Test", document.data["name"].toString() + " " + document.data["description"].toString())
+                        }
+                    } else {
+                        Log.w("Test", "Error getting documents.", task.exception)
+                    }
+                }
     }
 }

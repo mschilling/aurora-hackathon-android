@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "77153111847",
-    "firebase_url": "https://aurora-hackathon-android.firebaseio.com",
-    "project_id": "aurora-hackathon-android",
-    "storage_bucket": "aurora-hackathon-android.appspot.com"
+    "project_number": "772003583940",
+    "firebase_url": "https://aurora-hackathon.firebaseio.com",
+    "project_id": "aurora-hackathon",
+    "storage_bucket": "aurora-hackathon.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:77153111847:android:7d0bf119487caea3",
+        "mobilesdk_app_id": "1:772003583940:android:7d0bf119487caea3",
         "android_client_info": {
           "package_name": "com.example.dennis.hackaton"
         }
       },
       "oauth_client": [
         {
-          "client_id": "77153111847-po7rc54guob8vo8j4bh3p85mte0us6h5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.dennis.hackaton",
-            "certificate_hash": "8f012d1bbacd27e161b21957ac045907ba5a2696"
-          }
-        },
-        {
-          "client_id": "77153111847-tb1vapadtl4agf0vsnvalgahca4pinev.apps.googleusercontent.com",
+          "client_id": "772003583940-3mdfb8jl3365e5o0gl8g22jfnabvsr7e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDsqPea067LDUGCOXQSOhcpaqL7w4chvo"
+          "current_key": "AIzaSyC-dQuEOvpQNLdQZNrYylMbLfbq-zlZGlg"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "77153111847-tb1vapadtl4agf0vsnvalgahca4pinev.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
