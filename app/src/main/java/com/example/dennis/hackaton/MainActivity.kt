@@ -19,16 +19,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var mFireStore: FirebaseFirestore? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
-    var myList: MutableList<PointsOfInterest> = mutableListOf<PointsOfInterest>()
+    var myList: ArrayList<PointsOfInterest> = ArrayList<PointsOfInterest>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         checkGps()
-        getDataFromFirestore()
-        //getDoc()
         getRealTimeChanges()
+
+        //getDataFromFirestore()
+        //getDoc()
 
         mapsButton.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private fun checkGps() {
         var lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         var gpsStatus = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+
         var intent1 = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
 
         if (!gpsStatus) {
@@ -75,6 +78,9 @@ class MainActivity : AppCompatActivity() {
 
                             Log.d("Test", document.data["name"].toString() + " " + document.data["description"].toString())
                             Log.d("Adding", myList.count().toString())
+                        }
+                        for(test in myList) {
+                            Log.d("Main test", test.name.toString())
                         }
                     } else {
                         Log.w("Test", "Error getting documents.", task.exception)
