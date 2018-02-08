@@ -88,7 +88,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun onLocationChanged(location: Location) {
-        var msg = "Updated Location: " + location.latitude + " , " + location.longitude
         val location = LatLng(location.latitude, location.longitude)
 
         // show toast message with updated location

@@ -17,18 +17,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    private var mFireStore: FirebaseFirestore? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
-    var myList: ArrayList<PointsOfInterest> = ArrayList<PointsOfInterest>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         checkGps()
         getRealTimeChanges()
 
-        //getDataFromFirestore()
         //getDoc()
 
         mapsButton.setOnClickListener {
@@ -41,11 +38,12 @@ class MainActivity : AppCompatActivity() {
     private fun checkGps() {
         var lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         var gpsStatus = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        var networkStatus = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
 
         var intent1 = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
 
-        if (!gpsStatus) {
+        if (!gpsStatus && !networkStatus) {
             val simpleAlert = AlertDialog.Builder(this@MainActivity).create()
             simpleAlert.setTitle("Gps Location")
             simpleAlert.setMessage("Your gps location is disabled, do you want to enable it?")
@@ -54,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent1)
             })
             simpleAlert.setButton(AlertDialog.BUTTON_NEGATIVE, "No", { dialogInterface, i ->
-                Toast.makeText(applicationContext, "You clicked on No", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "The application needs gps to work properly! ", Toast.LENGTH_SHORT).show()
             })
             simpleAlert.show()
         } else {
@@ -62,31 +60,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDataFromFirestore() {
-        mFireStore = FirebaseFirestore.getInstance()
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        mFireStore!!.collection("pointsOfInterest")
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        for (document in task.result) {
-                            var pointsOfInterest = PointsOfInterest()
-
-                            pointsOfInterest.name = document.data["name"] as String
-
-                            myList.add(pointsOfInterest)
-
-                            Log.d("Test", document.data["name"].toString() + " " + document.data["description"].toString())
-                            Log.d("Adding", myList.count().toString())
-                        }
-                        for(test in myList) {
-                            Log.d("Main test", test.name.toString())
-                        }
-                    } else {
-                        Log.w("Test", "Error getting documents.", task.exception)
-                    }
-                }
-    }
 
     fun getDoc() {
         val db = FirebaseFirestore.getInstance()
@@ -112,11 +85,7 @@ class MainActivity : AppCompatActivity() {
 
                     for (document in querySnapshot!!.documents) {
                         Log.d("Version:", document.data.get("version").toString())
-
                         versionText.text = document.data.get("version").toString()
-                        // val myObject = document.toObject(MyObject::class.java)
-                        // Log.e(TAG,document.data.get("foo")) // Print : "foo"
-                        //Log.e(TAG, myObject.foo) // Print : ""
                     }
                 })
     }
