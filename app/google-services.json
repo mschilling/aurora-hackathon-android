@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "772003583940-f66sh5imjkd3ou2c1mkh1jfs4svj8but.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dennis.hackaton",
+            "certificate_hash": "8f012d1bbacd27e161b21957ac045907ba5a2696"
+          }
+        },
+        {
           "client_id": "772003583940-3mdfb8jl3365e5o0gl8g22jfnabvsr7e.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772003583940-akidfnopgjllt6fknq96hvg8j3ffkm9m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.move4mobile.aurora"
+              }
+            },
+            {
+              "client_id": "772003583940-3mdfb8jl3365e5o0gl8g22jfnabvsr7e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

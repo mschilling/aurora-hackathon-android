@@ -3,13 +3,12 @@ package com.example.dennis.hackaton
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.location.*
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -75,13 +74,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 onLocationChanged(locationResult!!.getLastLocation())
             }
         }
-        if(Build.VERSION.SDK_INT >= 23 && checkPermission()) {
+        if (Build.VERSION.SDK_INT >= 23 && checkPermission()) {
             LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, locationCallback, Looper.myLooper())
         }
     }
 
     private fun onLocationChanged(location: Location) {
-        var msg = "Updated Location: " + location.latitude  + " , " +location.longitude
+        var msg = "Updated Location: " + location.latitude + " , " + location.longitude
         val location = LatLng(location.latitude, location.longitude)
 
         // show toast message with updated location
@@ -93,8 +92,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
     }
 
-    private fun checkPermission() : Boolean {
-        if (ContextCompat.checkSelfPermission(this , android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+    private fun checkPermission(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true
         } else {
             requestPermissions()
@@ -103,14 +102,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == 1) {
-            if (permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION ) {
+        if (requestCode == 1) {
+            if (permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION) {
                 registerLocationListner()
             }
         }
-}}
+    }
+}
