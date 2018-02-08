@@ -101,8 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         Log.d("MyListCount", myList.count().toString())
     }
 
-
-    fun getRealTimeChanges() {
+    private fun getRealTimeChanges() {
         val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("pointsOfInterest")
 
@@ -134,7 +133,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mGoogleMap!!.addMarker(MarkerOptions().position(location).title(document.name.toString()))
         }
     }
-
 
     private fun checkPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
