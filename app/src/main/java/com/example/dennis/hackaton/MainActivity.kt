@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.FirebaseAnalytics.Event.APP_OPEN
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
@@ -19,22 +19,30 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
-    var bundle = Bundle()
+    var usersList: ArrayList<UserModel> = ArrayList<UserModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        loadUsers()
         analyseTest()
         checkGps()
         getRealTimeChanges()
 
         //getDoc()
-
         mapsButton.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
+            makeUserOnline(usersList.get(5))
             startActivity(intent)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        makeUserOffline(usersList.get(5))
+    }
+
     private fun analyseTest() {
         var bundle = Bundle()
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -97,7 +105,53 @@ class MainActivity : AppCompatActivity() {
                 })
     }
 
+    fun loadUsers() {
+        val db = FirebaseFirestore.getInstance()
+        val docRef = db.collection("users")
 
+        docRef.addSnapshotListener { snapshots, ex ->
+            for (doc in snapshots?.documents ?: emptyList()) {
+                usersList.add(doc.toObject(UserModel::class.java))
+            }
+
+            var names = arrayOfNulls<String>(usersList.size)
+            var i = 0
+            for (user in usersList) {
+                names[i] = user.displayName ?: ""
+                i++
+                Log.d("Users:", user.displayName + " " + user.status)
+            }
+        }
+    }
+
+    fun makeUserOnline(user: UserModel) {
+        //FireStore
+        var db = FirebaseFirestore.getInstance()
+        var query = db.collection("users").document(user.userId ?: "")
+        user.apply {
+            status = "online"
+        }
+        query.set(user)
+
+        //FireBase
+        var fbquery = FirebaseDatabase.getInstance().getReference("status/" + user.userId).setValue("online")
+
+        FirebaseDatabase.getInstance().getReference("/status/" + user.userId)
+                .onDisconnect()     // Set up the disconnect hook
+                .setValue("offline")
+    }
+
+    fun makeUserOffline(user: UserModel) {
+        // Firestore
+        var query = FirebaseFirestore.getInstance().collection("users").document(user.userId ?: "")
+        user.apply {
+            status = "offline"
+        }
+        query.set(user)
+
+        // Firebase
+        var fbquery = FirebaseDatabase.getInstance().getReference("status/" + user.userId).setValue("offline")
+    }
 }
 
 

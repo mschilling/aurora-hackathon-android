@@ -1,7 +1,6 @@
 package com.example.dennis.hackaton
 
 import com.google.firebase.firestore.GeoPoint
-import java.io.Serializable
 
 /**
  * Created by Dennis on 7-2-2018.
