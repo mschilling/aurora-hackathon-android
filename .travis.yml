@@ -17,7 +17,7 @@ before_install:
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 notifications:
   email:
-    on_failure: always
+    on_failure: never
     on_success: never
 # addons:
 #   ssh_known_hosts: vps3.move4mobile.com
