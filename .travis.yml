@@ -1,0 +1,40 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+  - tools
+branches:
+  only:
+  - develop
+# before_script:
+# - openssl aes-256-cbc -K $encrypted_1ff9b5e561e8_key -iv $encrypted_1ff9b5e561e8_iv -in .travis/keystore.properties.enc -out keystore.properties -d
+# - openssl aes-256-cbc -K $encrypted_6f546c58e064_key -iv $encrypted_6f546c58e064_iv -in .travis/dev/google-services.json.enc -out app/google-services.json -d
+script:
+- "./gradlew assembleDev"
+before_install:
+- mkdir "$ANDROID_HOME/licenses" || true
+- echo -e "\nd56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+notifications:
+  email:
+    on_failure: always
+    on_success: never
+# addons:
+#   ssh_known_hosts: vps3.move4mobile.com
+
+# before_deploy:
+# - openssl aes-256-cbc -k "$deploy_key_password" -in .travis/deploy_key.enc -out .travis/deploy_key -d
+# - eval "$(ssh-agent -s)"
+# - chmod 0600 .travis/deploy_key
+# - ssh-add .travis/deploy_key
+# deploy:
+# - provider: script
+#   skip_cleanup: true
+#   script: "sh .travis/deploy.sh"
+#   on:
+#     branch:
+#     - develop
+env:
+  # global:
+  # - secure: T+PnGqjCTNMpxXnvxkQ3Q2U3RIrqsM02N9TuLkftkxu+Q4V/+wy/2hUeCWFZa2ru5l8hHlu7mPuejHYTSESFxUcJ3R0HG0SGdyupRxA+hLXGaQNLQm3hu6CXQmV4r4v2hS9FJm2LgC49/Pq38njtSNLwL5Q2Kun/oCrOQBp9RMCTgvE/NachYmc4kp57WHkUHRPTDRpsL32GJgqIOpcm1vq7NNGKw4Vchx9ouJIjA2Mge5yHLDgXzu/VAUqAmeSNWhzwuNPx9oLiTEfnLgi8Qlu2TTlPno5b5ehVtt38F/kQXD6TRE5O0jZnFQwLjHC44LdLf/c9aNemEwq8ZsR/j1i9cJzJFrciPGEonal8ceAp+En9oH5DA3y6zYrLxAPDbbYyNACr2zRdENss4uUi2mVSGqaThai1mXL0knF8XyUHMDn3ldE09vnOL2WnndHVu6g4Fr2v/5ZKolOHRhKEH/hA6Wa6JSdXVDZWuz+jbQdXPpQ9l1T16aUMngTAqSfK8VhYfooH4otYchI1j9+T2jebU6RrqHKxwZlH0qigIla4/KD2p3xvClD2m8u+7TPzLZl7lYNq/zk8SBEcVuN4aT78kwknqzWBXK/Bilx/G0JjtH3Rf6rqr8fqTWOAAXJt6e2olkPm+5pHCSlGgRRYWiDlhenVEB2Rz0pXAJF2sGI=
+  # - secure: fATdl8e8tJqzM8caD/gUR4He7e0eODE7ZnYhB6S/lZBV1t2wBcFOgFB5o9loQJC0eGJ17TzWw0FZg4C/F76+Jk89XJ0o490SiKqtO3SnDry5P7b8h9vdSDVoOe6ooZACWWgH9WpIs2QzK+DVV6W4AfArbi+oKpvxSLd/yhuWEUu/Vq47tVz8zG3IdILDiNADAvitwJuSE09KoYumh+iBcGzafrhF6kif8NZeGFryN/gQmb93z+VnMgBr256+QO4HmcKa0oJ5KzlJ5U0jrJDTI9iKnpLnWVBSU5xGQtpBIooaMIOOesx+FmBKhmKPiNKTVTrjlKkmz1Cj4soSvlo3VhkyAm5opd4s66UAZdWtXQH9HWtTJL+o9jaPQSk3Bh6ZpeiACKjs2MSbvAEGCLdAuBpCvRQzfDT+TnoLaiZeyN4hVR+Kp43ftfpZCTjeb2Pyyn5vhVNUX9/S/7rbWGUijhgIBIOfZJI1v0NUiCH5mstL6Zak9zmtk0xJTqfoRpgNMvphM8QpCse0fdzrywV48KziEfSWAXA+csb23YncLkF9Jf7FbSi1ht3JutWUk4e5xA9mDp5yG/y0Wwfk2rQTjWgBvIZ0l1SqTnvlKovGOgWu6cbw+3XZr1IccHJaNBngx2Jow3fd/OFlpEWdIV1U6GIySluBij4ELo+GMFW7kZ0=
